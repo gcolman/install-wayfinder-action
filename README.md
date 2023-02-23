@@ -1,5 +1,7 @@
 # Github action to Download and install a version of the Appvia  Wayfinder CLI
 
+The action is compiled using NCC, the compiled source is in the dist folder
+
 This action prints "Hello World" or "Hello" + the name of a person to greet to the log.
 
 ## Inputs
