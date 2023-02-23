@@ -13663,6 +13663,7 @@ async function run() {
 
     const wfPath = await tc.cacheDir(wfBin, 'wf', '1.16.10');
     core.addPath(wfPath);
+    await exec.exec('wf version');   
   
     // `who-to-greet` input defined in action metadata file
     const nameToGreet = core.getInput('who-to-greet');
@@ -13678,6 +13679,7 @@ async function run() {
 }
 
 run();
+
 })();
 
 module.exports = __webpack_exports__;
