@@ -8,15 +8,7 @@ set -euo pipefail
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")"/../.. >/dev/null 2>&1 && pwd)"
 
 WF_VERSION="${WF_VERSION:-"${VERSION:-"latest"}"}"
-
-if [[ -z "${RELEASE_BUCKET:-}" ]]; then
-  IS_REL=$(${PROJECT_DIR}/scripts/registry-helpers.bash isrelease --version ${WF_VERSION})
-  if [[ ${IS_REL} == "true" ]]; then
-    RELEASE_BUCKET=wayfinder-releases
-  else
-    RELEASE_BUCKET=wayfinder-dev-releases
-  fi
-fi
+RELEASE_BUCKET=wayfinder-releases
 LOCAL_WF=${LOCAL_WF:-"false"}
 BIN=${BIN:-$(pwd)/wfbin}
 

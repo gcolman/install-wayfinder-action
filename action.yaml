@@ -1,13 +1,30 @@
-name: 'Wayfinder CLI install'
-description: 'INstall the Wayfinder CLI into a cache'
-inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
-runs:
-  using: 'node16'
-  main: 'dist/index.js'
+name: Install wf CLI
+on:
+  workflow_call:
+
+env:
+  VERSION: ${{ inputs.VERSION }}
+  RELEASE_BUCKET: ${{ inputs.RELEASE_BUCKET }}
+jobs:
+  prepare-wf:
+    runs-on: ubuntu-latest
+    env:
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.GIT_SHA }}
+      - name: Fetch Wayfinder CLI
+        run: |
+          export LOGS="$(pwd)/logs"
+          export JSON_FILE="$(pwd)/env.json"
+          export BIN="$(pwd)/bin"
+          source ./bin/get-wf-release.sh
+      - name: Save env file
+        uses: actions/upload-artifact@v3
+        with:
+          retention-days: 2
+          name: env-info-${{ inputs.cloud }}
+          path: env.json
+
+  
